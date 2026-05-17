@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Soltanbkz — Сайты за 37 000 ₸ за 1 день</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=Manrope:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #080912;
+    --card: #0f1228;
+    --card2: #131630;
+    --accent: #5c6eff;
+    --accent2: #7b8cff;
+    --gold: #ffb740;
+    --red: #ff4545;
+    --white: #ffffff;
+    --muted: #6b74a8;
+    --light: #c8ccf0;
+    --border: rgba(92,110,255,0.18);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--white);
+    font-family: 'Manrope', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* ─── NOISE OVERLAY ─── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+  }
+
+  /* ─── GLOW BLOBS ─── */
+  .blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 0 48px;
+    height: 68px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(8,9,18,0.7);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 18px;
+    font-weight: 900;
+    letter-spacing: -0.5px;
+  }
+  .nav-logo span { color: var(--accent); }
+
+  .nav-cta {
+    background: var(--accent);
+    color: #fff;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    padding: 10px 22px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .nav-cta:hover { background: var(--accent2); transform: translateY(-1px); }
+
+  /* ─── HERO ─── */
+  #hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    padding: 120px 48px 80px;
+    overflow: hidden;
+  }
+
+  .hero-blob1 { width: 600px; height: 600px; background: rgba(92,110,255,0.18); top: -100px; right: -150px; }
+  .hero-blob2 { width: 400px; height: 400px; background: rgba(255,183,64,0.10); bottom: 0; left: -100px; }
+
+  .hero-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 700px;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(92,110,255,0.15);
+    border: 1px solid var(--border);
+    padding: 7px 16px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--accent2);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+  .hero-badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    background: var(--gold);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.4); }
+  }
+
+  .hero-title {
+    font-family: 'Unbounded', sans-serif;
+    font-size: clamp(42px, 7vw, 88px);
+    font-weight: 900;
+    line-height: 1.0;
+    letter-spacing: -2px;
+    margin-bottom: 24px;
+  }
+  .hero-title em { color: var(--gold); font-style: normal; }
+  .hero-title .accent { color: var(--accent); }
+
+  .hero-sub {
+    font-size: 18px;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 48px;
+    max-width: 500px;
+    font-weight: 400;
+  }
+
+  .hero-prices {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+  }
+
+  .price-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 22px 28px;
+    min-width: 190px;
+    position: relative;
+    overflow: hidden;
+  }
+  .price-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+  .price-card.mine::before { background: var(--accent); }
+  .price-card.theirs::before { background: var(--red); }
+
+  .price-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 8px;
+  }
+  .price-val {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 32px;
+    font-weight: 900;
+    line-height: 1;
+  }
+  .price-card.mine .price-val { color: var(--gold); }
+  .price-card.theirs .price-val {
+    color: var(--red);
+    text-decoration: line-through;
+    opacity: 0.7;
+  }
+
+  .hero-btns {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--accent);
+    color: #fff;
+    font-weight: 700;
+    font-size: 15px;
+    padding: 15px 30px;
+    border-radius: 10px;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .btn-primary:hover { background: var(--accent2); transform: translateY(-2px); box-shadow: 0 12px 40px rgba(92,110,255,0.4); }
+
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: transparent;
+    color: var(--light);
+    font-weight: 600;
+    font-size: 15px;
+    padding: 15px 30px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .btn-ghost:hover { border-color: var(--accent2); color: var(--accent2); }
+
+  /* ─── SECTION BASE ─── */
+  section {
+    position: relative;
+    padding: 100px 48px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+
+  .section-title {
+    font-family: 'Unbounded', sans-serif;
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 900;
+    letter-spacing: -1px;
+    line-height: 1.1;
+    margin-bottom: 56px;
+  }
+
+  /* ─── WHY ─── */
+  .why-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 20px;
+  }
+
+  .why-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 32px 28px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.25s, border-color 0.25s;
+  }
+  .why-card:hover { transform: translateY(-4px); border-color: rgba(92,110,255,0.5); }
+
+  .why-icon {
+    font-size: 36px;
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  .why-card h3 {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+
+  .why-card p {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  .why-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+    opacity: 0;
+    transition: opacity 0.25s;
+  }
+  .why-card:hover::after { opacity: 1; }
+
+  /* ─── CASES ─── */
+  .cases-intro {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    margin-bottom: 56px;
+    align-items: center;
+  }
+  @media(max-width: 768px) { .cases-intro { grid-template-columns: 1fr; } }
+
+  .cases-stat {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 64px;
+    font-weight: 900;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .cases-stat-label { font-size: 15px; color: var(--muted); margin-top: 8px; }
+
+  .cases-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 24px;
+  }
+
+  .case-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+  .case-card:hover { transform: translateY(-6px); box-shadow: 0 24px 64px rgba(0,0,0,0.5); border-color: rgba(92,110,255,0.4); }
+
+  .case-preview {
+    width: 100%;
+    height: 200px;
+    position: relative;
+    overflow: hidden;
+    background: #0d1030;
+  }
+
+  .case-preview iframe {
+    width: 170%;
+    height: 170%;
+    border: none;
+    transform: scale(0.588);
+    transform-origin: top left;
+    pointer-events: none;
+  }
+
+  .case-preview-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent 60%, var(--card) 100%);
+  }
+
+  .case-tag {
+    position: absolute;
+    top: 12px; left: 12px;
+    background: rgba(92,110,255,0.85);
+    backdrop-filter: blur(8px);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 6px;
+  }
+
+  .case-body {
+    padding: 20px 24px 24px;
+  }
+
+  .case-name {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+
+  .case-url {
+    font-size: 12px;
+    color: var(--muted);
+    font-style: italic;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .case-url::before {
+    content: '🔗';
+    font-size: 11px;
+  }
+
+  /* ─── WHAT'S INCLUDED ─── */
+  .include-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  @media(max-width: 640px) { .include-grid { grid-template-columns: 1fr; } }
+
+  .include-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px 20px;
+    transition: border-color 0.2s;
+  }
+  .include-item:hover { border-color: rgba(92,110,255,0.45); }
+
+  .include-check {
+    width: 28px; height: 28px;
+    background: rgba(34,197,94,0.15);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .include-item p {
+    font-size: 14px;
+    color: var(--light);
+    line-height: 1.5;
+  }
+
+  .bonus-bar {
+    margin-top: 24px;
+    background: linear-gradient(135deg, rgba(92,110,255,0.2), rgba(255,183,64,0.1));
+    border: 1px solid rgba(92,110,255,0.35);
+    border-radius: 16px;
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--light);
+  }
+  .bonus-bar span:first-child { font-size: 28px; }
+
+  /* ─── HOW ─── */
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    position: relative;
+  }
+  @media(max-width: 768px) { .steps { grid-template-columns: 1fr 1fr; } }
+  @media(max-width: 480px) { .steps { grid-template-columns: 1fr; } }
+
+  .steps::before {
+    content: '';
+    position: absolute;
+    top: 40px;
+    left: 10%;
+    right: 10%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent), var(--accent), transparent);
+    opacity: 0.3;
+    pointer-events: none;
+  }
+
+  .step {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 28px 22px;
+    position: relative;
+    transition: transform 0.25s;
+  }
+  .step:hover { transform: translateY(-4px); }
+
+  .step-num {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 48px;
+    font-weight: 900;
+    color: var(--accent);
+    opacity: 0.25;
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+
+  .step h3 {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+
+  .step p {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  /* ─── COMPARE ─── */
+  .compare-wrap {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    overflow: hidden;
+  }
+
+  .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .compare-table th {
+    padding: 20px 28px;
+    font-family: 'Unbounded', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    text-align: left;
+    background: var(--card2);
+    border-bottom: 1px solid var(--border);
+  }
+  .compare-table th.highlight { color: var(--gold); }
+
+  .compare-table td {
+    padding: 16px 28px;
+    font-size: 14px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+
+  .compare-table tr:last-child td { border-bottom: none; }
+  .compare-table td:first-child { color: var(--muted); }
+  .compare-table td.yes { color: #22c55e; font-weight: 600; }
+  .compare-table td.no { color: var(--red); }
+  .compare-table td.highlight-cell { color: var(--gold); font-family: 'Unbounded', sans-serif; font-weight: 700; }
+
+  /* ─── CONTACT ─── */
+  #contact {
+    padding: 100px 48px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .contact-inner {
+    background: linear-gradient(135deg, var(--card) 0%, rgba(92,110,255,0.08) 100%);
+    border: 1px solid var(--border);
+    border-radius: 32px;
+    padding: 64px 56px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .contact-inner .blob {
+    width: 400px; height: 400px;
+    background: rgba(92,110,255,0.12);
+    top: -100px; right: -100px;
+    position: absolute;
+  }
+
+  .contact-title {
+    font-family: 'Unbounded', sans-serif;
+    font-size: clamp(32px, 5vw, 56px);
+    font-weight: 900;
+    letter-spacing: -1.5px;
+    margin-bottom: 16px;
+    position: relative;
+  }
+
+  .contact-sub {
+    font-size: 17px;
+    color: var(--muted);
+    margin-bottom: 48px;
+    position: relative;
+  }
+
+  .contact-cards {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+    position: relative;
+  }
+
+  .contact-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 24px 32px;
+    min-width: 200px;
+    transition: all 0.25s;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+  .contact-card:hover { background: rgba(92,110,255,0.12); border-color: var(--accent); transform: translateY(-3px); }
+
+  .contact-card-icon { font-size: 32px; margin-bottom: 10px; }
+  .contact-card-label { font-size: 11px; font-weight: 700; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; margin-bottom: 6px; }
+  .contact-card-val { font-size: 17px; font-weight: 700; }
+
+  .contact-tagline {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 15px;
+    color: var(--gold);
+    font-weight: 700;
+    letter-spacing: 1px;
+    position: relative;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    text-align: center;
+    padding: 32px 48px;
+    border-top: 1px solid var(--border);
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  /* ─── SCROLL ANIMATIONS ─── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media(max-width: 768px) {
+    nav { padding: 0 20px; }
+    #hero { padding: 110px 20px 60px; }
+    section { padding: 70px 20px; }
+    #contact { padding: 70px 20px; }
+    .contact-inner { padding: 40px 24px; }
+    footer { padding: 24px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">soltanbkz<span>.</span>kz</div>
+  <a href="#contact" class="nav-cta">Заказать сайт →</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero" style="padding-top:120px;padding-bottom:80px;max-width:100%;padding-left:48px;padding-right:48px;">
+  <div class="blob hero-blob1"></div>
+  <div class="blob hero-blob2"></div>
+  <div class="hero-inner">
+    <div class="hero-badge">Веб-разработка · Алматы</div>
+    <h1 class="hero-title">
+      Сайт за<br>
+      <em>1 день</em><br>
+      <span class="accent">за 37 000 ₸</span>
+    </h1>
+    <p class="hero-sub">Профессиональный сайт под ваш бизнес — уникальный дизайн, мобильная адаптация, бесплатный хостинг. Без шаблонов, без ожидания.</p>
+    <div class="hero-prices">
+      <div class="price-card mine">
+        <div class="price-label">У меня</div>
+        <div class="price-val">37 000 ₸</div>
+      </div>
+      <div class="price-card theirs">
+        <div class="price-label">В агентствах</div>
+        <div class="price-val">150 000+ ₸</div>
+      </div>
+    </div>
+    <div class="hero-btns">
+      <a href="https://wa.me/77074880931" target="_blank" class="btn-primary">
+        ✈ Написать в WhatsApp
+      </a>
+      <a href="#cases" class="btn-ghost">Смотреть кейсы ↓</a>
+    </div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section id="why">
+  <div class="section-label">Почему я</div>
+  <h2 class="section-title">Быстро. Дёшево.<br>Без лишних слов.</h2>
+  <div class="why-grid">
+    <div class="why-card reveal">
+      <span class="why-icon">⚡</span>
+      <h3>24 часа</h3>
+      <p>Готовый сайт уже на следующий день после заявки. Никаких недель согласований.</p>
+    </div>
+    <div class="why-card reveal" style="transition-delay:0.1s">
+      <span class="why-icon">💰</span>
+      <h3>В 4× дешевле</h3>
+      <p>37 000 ₸ вместо 150 000+ в студиях. Та же качество, честная цена.</p>
+    </div>
+    <div class="why-card reveal" style="transition-delay:0.2s">
+      <span class="why-icon">🎨</span>
+      <h3>Уникальный дизайн</h3>
+      <p>Никаких шаблонов. Каждый сайт разрабатывается индивидуально под бизнес.</p>
+    </div>
+    <div class="why-card reveal" style="transition-delay:0.3s">
+      <span class="why-icon">🆓</span>
+      <h3>Бесплатный хостинг</h3>
+      <p>Хостинг на GitHub Pages — ваш сайт живёт вечно без ежегодных платежей.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CASES -->
+<section id="cases">
+  <div class="section-label">Реальные кейсы</div>
+  <h2 class="section-title">Живые сайты,<br>не скриншоты</h2>
+
+  <div class="cases-grid">
+
+    <a href="https://autopodbor-almaty.kz" target="_blank" class="case-card reveal">
+      <div class="case-preview">
+        <iframe src="https://autopodbor-almaty.kz" loading="lazy" scrolling="no" tabindex="-1"></iframe>
+        <div class="case-preview-overlay"></div>
+        <div class="case-tag">Авто</div>
+      </div>
+      <div class="case-body">
+        <div class="case-name">Автоподбор Алматы</div>
+        <div class="case-url">autopodbor-almaty.kz</div>
+      </div>
+    </a>
+
+    <a href="https://vesy-kazakhstan.kz/" target="_blank" class="case-card reveal" style="transition-delay:0.1s">
+      <div class="case-preview">
+        <iframe src="https://vesy-kazakhstan.kz/" loading="lazy" scrolling="no" tabindex="-1"></iframe>
+        <div class="case-preview-overlay"></div>
+        <div class="case-tag">Оборудование</div>
+      </div>
+      <div class="case-body">
+        <div class="case-name">Весы Казахстан</div>
+        <div class="case-url">vesy-kazakhstan.kz</div>
+      </div>
+    </a>
+
+    <a href="https://soltanbkz.github.io/ves-kitay/" target="_blank" class="case-card reveal" style="transition-delay:0.2s">
+      <div class="case-preview">
+        <iframe src="https://soltanbkz.github.io/ves-kitay/" loading="lazy" scrolling="no" tabindex="-1"></iframe>
+        <div class="case-preview-overlay"></div>
+        <div class="case-tag">Оптовые весы</div>
+      </div>
+      <div class="case-body">
+        <div class="case-name">Вес из Китая</div>
+        <div class="case-url">soltanbkz.github.io/ves-kitay</div>
+      </div>
+    </a>
+
+    <a href="https://bolke.kz" target="_blank" class="case-card reveal">
+      <div class="case-preview">
+        <iframe src="https://bolke.kz" loading="lazy" scrolling="no" tabindex="-1"></iframe>
+        <div class="case-preview-overlay"></div>
+        <div class="case-tag">Бизнес</div>
+      </div>
+      <div class="case-body">
+        <div class="case-name">Bolke.kz</div>
+        <div class="case-url">bolke.kz</div>
+      </div>
+    </a>
+
+    <a href="https://qwent-climate.kz" target="_blank" class="case-card reveal" style="transition-delay:0.1s">
+      <div class="case-preview">
+        <iframe src="https://qwent-climate.kz" loading="lazy" scrolling="no" tabindex="-1"></iframe>
+        <div class="case-preview-overlay"></div>
+        <div class="case-tag">Климат</div>
+      </div>
+      <div class="case-body">
+        <div class="case-name">Qwent Climate</div>
+        <div class="case-url">qwent-climate.kz</div>
+      </div>
+    </a>
+
+    <a href="https://qazpack.pages.dev/" target="_blank" class="case-card reveal" style="transition-delay:0.2s">
+      <div class="case-preview">
+        <iframe src="https://qazpack.pages.dev/" loading="lazy" scrolling="no" tabindex="-1"></iframe>
+        <div class="case-preview-overlay"></div>
+        <div class="case-tag">Упаковка</div>
+      </div>
+      <div class="case-body">
+        <div class="case-name">QazPack</div>
+        <div class="case-url">qazpack.pages.dev</div>
+      </div>
+    </a>
+
+    <a href="https://shater-arenda-almaty.kz" target="_blank" class="case-card reveal">
+      <div class="case-preview">
+        <iframe src="https://shater-arenda-almaty.kz" loading="lazy" scrolling="no" tabindex="-1"></iframe>
+        <div class="case-preview-overlay"></div>
+        <div class="case-tag">Аренда</div>
+      </div>
+      <div class="case-body">
+        <div class="case-name">Шатёр аренда Алматы</div>
+        <div class="case-url">shater-arenda-almaty.kz</div>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- INCLUDED -->
+<section id="included">
+  <div class="section-label">Состав</div>
+  <h2 class="section-title">Что входит<br>в стоимость?</h2>
+  <div class="include-grid">
+    <div class="include-item reveal"><div class="include-check">✅</div><p>Разработка сайта под ваш бизнес</p></div>
+    <div class="include-item reveal" style="transition-delay:0.05s"><div class="include-check">✅</div><p>Бесплатный хостинг навсегда</p></div>
+    <div class="include-item reveal" style="transition-delay:0.1s"><div class="include-check">✅</div><p>Уникальный дизайн (не шаблон)</p></div>
+    <div class="include-item reveal" style="transition-delay:0.15s"><div class="include-check">✅</div><p>Форма обратной связи / кнопка звонка</p></div>
+    <div class="include-item reveal" style="transition-delay:0.2s"><div class="include-check">✅</div><p>Адаптация под мобильные устройства</p></div>
+    <div class="include-item reveal" style="transition-delay:0.25s"><div class="include-check">✅</div><p>Базовая SEO-настройка</p></div>
+    <div class="include-item reveal" style="transition-delay:0.3s"><div class="include-check">✅</div><p>Подключение домена</p></div>
+    <div class="include-item reveal" style="transition-delay:0.35s"><div class="include-check">✅</div><p>Сдача сайта через 24 часа</p></div>
+  </div>
+  <div class="bonus-bar reveal">
+    <span>🚀</span>
+    <span><strong>Бонус:</strong> хостинг на GitHub Pages — ваш сайт живёт без ежегодных платежей за хостинг навсегда</span>
+  </div>
+</section>
+
+<!-- HOW -->
+<section id="how">
+  <div class="section-label">Процесс</div>
+  <h2 class="section-title">Как это работает?</h2>
+  <div class="steps">
+    <div class="step reveal">
+      <div class="step-num">01</div>
+      <h3>Заявка</h3>
+      <p>Пишете в Telegram или Instagram. Обсуждаем задачу за 15 минут.</p>
+    </div>
+    <div class="step reveal" style="transition-delay:0.1s">
+      <div class="step-num">02</div>
+      <h3>Разработка</h3>
+      <p>Делаю сайт в течение дня, показываю прогресс на каждом этапе.</p>
+    </div>
+    <div class="step reveal" style="transition-delay:0.2s">
+      <div class="step-num">03</div>
+      <h3>Правки</h3>
+      <p>Вношу ваши пожелания и доработки — без лишних вопросов.</p>
+    </div>
+    <div class="step reveal" style="transition-delay:0.3s">
+      <div class="step-num">04</div>
+      <h3>Публикация</h3>
+      <p>Запускаем сайт на бесплатном хостинге, подключаем ваш домен.</p>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARE -->
+<section id="compare">
+  <div class="section-label">Сравнение</div>
+  <h2 class="section-title">Экономия очевидна</h2>
+  <div class="compare-wrap reveal">
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>Параметр</th>
+          <th class="highlight">soltanbkz</th>
+          <th>Фриланс-студия</th>
+          <th>Агентство</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Стоимость</td>
+          <td class="highlight-cell">37 000 ₸</td>
+          <td class="no">100 000+ ₸</td>
+          <td class="no">200 000+ ₸</td>
+        </tr>
+        <tr>
+          <td>Срок</td>
+          <td class="yes">1 день</td>
+          <td>1–3 недели</td>
+          <td>1–2 месяца</td>
+        </tr>
+        <tr>
+          <td>Уникальный дизайн</td>
+          <td class="yes">✓</td>
+          <td>Не всегда</td>
+          <td class="yes">✓</td>
+        </tr>
+        <tr>
+          <td>Бесплатный хостинг</td>
+          <td class="yes">✓ Навсегда</td>
+          <td class="no">✗</td>
+          <td class="no">✗</td>
+        </tr>
+        <tr>
+          <td>Мобильная адаптация</td>
+          <td class="yes">✓</td>
+          <td>✓</td>
+          <td class="yes">✓</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" style="padding-top:0;">
+  <div class="contact-inner">
+    <div class="blob"></div>
+    <h2 class="contact-title">Готовы начать?</h2>
+    <p class="contact-sub">Напишите прямо сейчас — ваш сайт будет готов уже завтра</p>
+    <div class="contact-cards">
+      <a href="tel:+77074880931" class="contact-card">
+        <div class="contact-card-icon">📞</div>
+        <div class="contact-card-label">Телефон</div>
+        <div class="contact-card-val">+7 707 488 0931</div>
+      </a>
+      <a href="https://instagram.com/soltanbkz" target="_blank" class="contact-card">
+        <div class="contact-card-icon">📸</div>
+        <div class="contact-card-label">Instagram</div>
+        <div class="contact-card-val">@soltanbkz</div>
+      </a>
+      <a href="https://t.me/soltanbkz" target="_blank" class="contact-card">
+        <div class="contact-card-icon">✈️</div>
+        <div class="contact-card-label">Telegram</сщdiv>
+        <div class="contact-card-val">@soltanbkz</div>
+      </a>
+    </div>
+    <div class="contact-tagline">37 000 ₸ · 1 день · Бесплатный хостинг</div>
+  </div>
+</section>
+t
+<footer>
+  © 2025 soltanbkz — Сайты за 1 день · Алматы · <a href="https://t.me/soltanbkz" style="color:var(--accent);text-decoration:none;">@soltanbkz</a>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
